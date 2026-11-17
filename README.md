@@ -1,52 +1,36 @@
 # ChromaClimber Color Bicone
 
-Tools and data for cleaning ChromaClimber color-sensor logs and mapping calibrated measurements into an interactive hue–saturation–lightness-inspired bicone.
+MATLAB tools for cleaning ChromaClimber color-sensor logs and mapping calibrated measurements into an interactive hue–saturation–lightness-inspired bicone.
 
-![Calibrated ChromaClimber measurements mapped to a bicone](ChromaClimber_Bicone_Preview.png)
+## Repository contents
 
-## Included
-
-- **Interactive browser viewer:** `ChromaClimber_Bicone_Interactive.html`
-- **MATLAB cleaning pipeline:** `clean_chromaclimber_logs.m`
-- **Shared coordinate calculations:** `chromaclimber_coordinates.m`
-- **Interactive MATLAB plot:** `plot_chromaclimber_bicone.m`
-- **One-click MATLAB entry point:** `run_chromaclimber_bicone.m`
-- **Cleaned data:** `ChromaClimber_Cleaned.csv` and `ChromaClimber_Cleaned.xlsx`
-- **Original calibrated-stage workbooks:** `input_workbooks/`
-- **Audit and summary files:** `condition_summary.csv`, `audit_notes.csv`, `column_dictionary.csv`, and `verification.json`
-
-The repository contains all **2,784 calibrated-stage measurements** from the GITC Lecture Hall, MECHE Lecture Hall, and Swissler Lab, collected with room lights on/off and integration times of 60, 300, and 600 ms.
-
-> The earlier 13-classroom pre-calibration dataset is not included in these workbooks.
+- `clean_chromaclimber_logs.m` — converts the original wide Excel logs into one row per measurement.
+- `chromaclimber_coordinates.m` — calculates calibrated and raw-derived bicone coordinates.
+- `plot_chromaclimber_bicone.m` — opens the interactive 3-D MATLAB figure with room, lighting, integration-time, color, and error filters.
+- `run_chromaclimber_bicone.m` — one-click entry point.
+- `condition_summary.csv` — condition-level counts, accuracy, and lightness bounds for the verified dataset.
+- `column_dictionary.csv` — definitions for the generated tidy-data columns.
+- `audit_notes.csv` and `verification.json` — data-processing and validation notes.
+- `input_workbooks/README.md` — required workbook layout and filenames.
 
 ## Quick start
 
-### Interactive browser plot
-
-Download the repository and open:
-
-```text
-ChromaClimber_Bicone_Interactive.html
-```
-
-The viewer is self-contained and works offline. Drag to rotate, scroll to zoom, hover over points for source information, and use the filters to select environment, lighting, integration time, color, representation, and classification errors.
-
-### MATLAB
-
-Set MATLAB's Current Folder to the repository folder and run:
+1. Place one calibrated-stage `.xlsx` workbook for each environment in `input_workbooks/`. The filenames must contain `GITC`, `MECHE`, and `Swissler` respectively.
+2. Set MATLAB's Current Folder to this repository.
+3. Run:
 
 ```matlab
 run_chromaclimber_bicone
 ```
 
-To rebuild the cleaned files from the original workbooks:
+If no existing cleaned CSV is present, the entry point calls the cleaning pipeline automatically. The original workbooks are never modified. Generated CSV/XLSX outputs are written to `matlab_output/`.
+
+To run the steps directly:
 
 ```matlab
 [T, Conditions] = clean_chromaclimber_logs;
 plot_chromaclimber_bicone(T);
 ```
-
-Generated MATLAB outputs are written to `matlab_output/`. The original workbooks are never modified.
 
 ## Bicone mapping
 
@@ -68,32 +52,33 @@ x  = r cos(2πH)
 y  = r sin(2πH)
 ```
 
-Measured saturation is retained, so measurements may lie inside the bicone rather than only on its outer surface. The firmware's saturation is `(maxRGB-minRGB)/maxRGB`, so this is an HSL-inspired visualization rather than standard HSL or a perceptually uniform color space.
+Measured saturation is retained, so measurements may appear inside the bicone rather than only on its outer surface. The firmware saturation is `(maxRGB-minRGB)/maxRGB`; therefore, this is an HSL-inspired visualization rather than conventional HSL or a perceptually uniform color space.
 
-## Data interpretation
+## Plot interpretation
 
-- Marker color represents the intended projected color.
+- Point color represents the intended projected color.
 - Circles are correctly classified readings.
 - Crosses are incorrectly classified readings.
-- Diamonds are nominal RGB target coordinates, not measured calibration references.
-- Repeated coordinates are retained and may overlap; no jitter is added.
-- The displayed accuracy uses the robot's logged final color index rather than a reclassification from rounded values.
+- Diamonds are nominal color targets, not measured calibration references.
+- Repeated coordinates are retained without artificial jitter.
+- Accuracy is computed from the robot's logged final color index, not reconstructed from rounded hue values.
 - The raw-RGB-derived view uses raw RGB from the same calibrated-stage runs; it is not the earlier 13-classroom pre-calibration experiment.
 
-## Requirements
+## Verified calibrated-stage dataset
 
-- Interactive HTML: a modern desktop browser
-- MATLAB scripts: base MATLAB R2020a or later
-- No third-party MATLAB toolbox is required
+The validation summary used to check this pipeline contains:
 
-## Verified dataset summary
-
-- 3 environments
-- 2 lighting conditions
-- 3 integration times
+- 3 environments: GITC Lecture Hall, MECHE Lecture Hall, and Swissler Lab
+- 2 ambient-lighting conditions
+- 3 integration times: 60, 300, and 600 ms
 - 8 projected colors
 - 2,784 total measurements
 - 2,617 logged correct classifications
 - 94.0% sample-weighted accuracy
 
-See `README.txt` for detailed methods, provenance notes, and figure-caption guidance.
+The earlier 13-classroom experiment was collected before the black–white–red calibration and is a separate dataset.
+
+## Requirements
+
+- MATLAB R2020a or later
+- No third-party MATLAB toolbox is required
