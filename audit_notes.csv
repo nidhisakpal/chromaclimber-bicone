@@ -1,0 +1,13 @@
+Check,Result
+Parsed C-prefixed records,2784 valid records; no parse errors
+Scope,3 filenames / environments; 18 room-lighting-integration conditions; 144 color blocks
+Counts per color block,43 at 60 ms; 10 at 300 ms; 5 at 600 ms
+Sheet2,Identical cell values in all three inputs; excluded as copied template
+Room and projector metadata,Room names follow filenames. Copied template projector metadata not treated as verified
+Missing reference captures,"No averaged R,G,B,C calibration-reference records found; calibration not reconstructed"
+Rounded hue seam,"398 HueLogged values equal 1.00; HueWrapped = MOD(HueLogged,1) for plotting"
+Lightness above 1,133 logged lightness values exceed 1; maximum is 1.43; originals preserved
+Duplicates,Repeated readings retained as individual samples; source file/sheet/cell stored
+Accuracy source,2617 correct of 2784 from logged final color indices; not recalculated from rounded hue
+Formula agreement,Spreadsheet coordinates checked against independently computed Python coordinates
+Representation caveat,"Firmware saturation (max-min)/max; HSL-inspired, not conventional HSL or perceptually uniform"
