@@ -1,0 +1,20 @@
+{
+  "samples": 2784,
+  "coordinates_checked": 2784,
+  "page_errors": [],
+  "controls_tested": [
+    "rotation by dragging",
+    "reset",
+    "errors only",
+    "600 ms",
+    "300 ms",
+    "room",
+    "lighting",
+    "raw view",
+    "pooled scaling",
+    "centroids",
+    "PNG export"
+  ],
+  "MATLAB_executed": false,
+  "Excel_coordinate_and_source_rows_verified": 2784
+}
