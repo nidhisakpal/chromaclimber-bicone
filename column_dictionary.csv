@@ -1,0 +1,43 @@
+Column,Meaning
+RecordID,"Unique row ID, assigned after deterministic sorting."
+Room,"Environment inferred from the input filename, not Sheet2."
+Integration_ms,"Integration setting parsed from the source worksheet name: 60, 300 or 600."
+AmbientLight,on/off parsed from the source worksheet name.
+TrueColor,"Intended projected color, from the hex header above the original log column."
+TrueHex,Original hex color header; used to color points.
+TrueIndex,Firmware class index associated with the intended color.
+PredictedIndex,Final color index printed by the robot; do not reconstruct from rounded H/S/C.
+PredictedColor,Name corresponding to PredictedIndex.
+Correct,"1 when logged PredictedIndex equals TrueIndex, otherwise 0."
+SampleInBlock,Sequential sample within a condition and true-color log column.
+RawR,Original raw red sensor count.
+RawG,Original raw green sensor count.
+RawB,Original raw blue sensor count.
+RawClear,Original raw clear sensor count.
+HueLogged,"Corrected hue exactly as printed; two decimal places, may print 1.00."
+LightnessLogged,Lightness exactly as printed by firmware; can exceed 1.
+SaturationLogged,"Logged firmware saturation, (max-min)/max; not standard HSL saturation."
+CalClearLogged,Calibrated clear value exactly as printed; not used for bicone coordinates.
+SourceFile,Original workbook filename.
+SourceSheet,Original integration/lighting worksheet.
+SourceCell,Original Excel cell containing this C-prefixed record.
+RawRecord,Original CSV-style text line.
+Condition,Room + lighting + integration identifier.
+HueWrapped,"HueLogged mod 1, used only for angular plotting."
+CalLMin,Minimum logged lightness across all eight colors in this condition.
+CalLMax,Maximum logged lightness across all eight colors in this condition.
+CalLNorm,Within-condition display normalization of logged lightness; not another calibration.
+CalRadius,(1 - abs(CalZ)) * SaturationLogged.
+CalX,CalRadius * cos(2*pi*HueWrapped).
+CalY,CalRadius * sin(2*pi*HueWrapped).
+CalZ,2*CalLNorm - 1.
+RawHue,Hue derived from raw RGB in the same run; no reference correction.
+RawSaturation,"(max rawRGB-min rawRGB)/max rawRGB, with zero guard."
+RawLightness,(max rawRGB+min rawRGB)/2.
+RawLMin,"Minimum RawLightness in the condition, across all eight colors."
+RawLMax,"Maximum RawLightness in the condition, across all eight colors."
+RawLNorm,Within-condition display normalization of RawLightness.
+RawRadius,(1-abs(RawZ))*RawSaturation.
+RawX,RawRadius*cos(2*pi*RawHue).
+RawY,RawRadius*sin(2*pi*RawHue).
+RawZ,2*RawLNorm-1.
