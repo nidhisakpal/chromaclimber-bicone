@@ -1,0 +1,13 @@
+# MATLAB generated output and autosaves
+matlab_output/
+*.asv
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+~$*.xlsx
